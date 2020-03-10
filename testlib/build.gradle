@@ -1,0 +1,20 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    api project(":logic")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.junit.jupiter:junit-jupiter:5.5.2"
+    implementation "org.junit.jupiter:junit-jupiter-params:5.5.2"
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}

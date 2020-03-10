@@ -1,0 +1,5 @@
+rootProject.name='Connect4'
+include ':app'
+include ':lib'
+include ':testlib'
+include ':logic'
