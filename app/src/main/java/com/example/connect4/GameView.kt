@@ -20,36 +20,25 @@ class GameView: View {
     private val colCount = mStudentGame.mColumns
     private val rowCount = mStudentGame.mRows
 
-    private var mGridPaint: Paint
-    private var mNoPlayerPaint: Paint
-
-    private var mPlayer1Paint: Paint
-    private var mPlayer2Paint: Paint
-
-
-    private val myGestureDetector = GestureDetector(context, myGestureListener())
-
-    init {
-        mGridPaint = Paint().apply {
-            style = Paint.Style.FILL
-            color = Color.BLUE
-        }
-
-        mNoPlayerPaint = Paint().apply {
-            style = Paint.Style.FILL
-            color = Color.WHITE
-        }
-
-        mPlayer1Paint = Paint().apply {
-            style = Paint.Style.FILL
-            color = Color.RED
-        }
-
-        mPlayer2Paint = Paint().apply {
-            style = Paint.Style.FILL
-            color = Color.YELLOW
-        }
+    private var mGridPaint: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        color = Color.BLUE
     }
+    private var mNoPlayerPaint: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        color = Color.WHITE
+    }
+
+    private var mPlayer1Paint: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        color = Color.RED
+    }
+    private var mPlayer2Paint: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        color = Color.YELLOW
+    }
+
+    private val myGestureDetector = GestureDetector(context, MyGestureListener())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -81,14 +70,10 @@ class GameView: View {
                 tokenAtPos = mStudentGame.getToken(col, row)
 
                 // Choose the correct colour for the circle.
-                if (tokenAtPos == 1) {
-                    paint = mPlayer1Paint
-                }
-                else if(tokenAtPos == 2) {
-                    paint = mPlayer2Paint
-                }
-                else {
-                    paint = mNoPlayerPaint
+                paint = when(tokenAtPos) {
+                    1 -> mPlayer1Paint
+                    2 -> mPlayer2Paint
+                    else -> mNoPlayerPaint
                 }
 
 
@@ -105,7 +90,7 @@ class GameView: View {
         return myGestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev)
     }
 
-    inner class myGestureListener: GestureDetector.SimpleOnGestureListener() {
+    inner class MyGestureListener: GestureDetector.SimpleOnGestureListener() {
         // You should always include onDown() and it should always return true.
         // Otherwise the GestureListener may ignore other events.
         override fun onDown(ev: MotionEvent): Boolean {
@@ -113,13 +98,13 @@ class GameView: View {
         }
 
         override fun onSingleTapUp(ev: MotionEvent): Boolean {
-            var turn = mStudentGame.playerTurn
+            val turn = mStudentGame.playerTurn
 
             // Work out the width of each column in pixels.
             val colWidth = width / colCount
 
             // Calculate the column number from the X co-ordinate of the touch event.
-            var colTouch = ev.x.toInt() / colWidth
+            val colTouch = ev.x.toInt() / colWidth
 
 
             // Tell the game logic that the user has chosen a column.
@@ -129,7 +114,7 @@ class GameView: View {
             invalidate()
             return true
         }
-    } // End of myGestureListener class.
+    } // End of MyGestureListener class.
 
     companion object { // Declare a constant (must be in the companion.
         const val LOGTAG = "MyTask"
