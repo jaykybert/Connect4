@@ -35,12 +35,30 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
         // Alternate player turns.
         playerTurn = if (playerTurn == 1) { 2 } else 1
 
-        for (row in mRows - 1 downTo 0) {
+        for (row in mRows-1 downTo 0) {
             if (mData[column][row] == 0) {
                 mData[column][row] = player
                 return true
             }
         }
         return false // Illegal move.
+    }
+
+    fun hasWon(column: Int, player: Int): Boolean {
+        // Column of 4.
+        var count: Int = 0 // Store how many in a row.
+        for (row in mRows-1 downTo 0) {
+            if(mData[column][row] == player) {
+                count++
+            }
+            else { // Reset the count.
+                count = 0
+            }
+            if(count == 4) return true
+        }
+
+        // TODO: Add horizontal win condition.
+
+        return false
     }
 }

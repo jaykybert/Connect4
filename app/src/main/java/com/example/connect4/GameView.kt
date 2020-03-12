@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 
 import com.example.logic.StudentGame
 
@@ -110,6 +111,9 @@ class GameView: View {
             // Tell the game logic that the user has chosen a column.
             mStudentGame.playToken(colTouch, turn)
 
+            if(mStudentGame.hasWon(colTouch, turn)) {
+                Toast.makeText(context, "Player $turn has won!", Toast.LENGTH_LONG).show();
+            }
             // Refresh the screen display (this is instead of using Listeners).
             invalidate()
             return true
