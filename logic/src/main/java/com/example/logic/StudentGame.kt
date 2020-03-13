@@ -45,6 +45,11 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
     }
 
     fun hasWon(column: Int, player: Int): Boolean {
+        /** :param column: The column of the most-recent token.
+         *  :param player: The player of the token.
+         *  Checks for a continuous vertical line of 4.
+         *  Checks for a continuous horizontal line of 4.
+         */
         // Column of 4.
         var count: Int = 0 // Store how many in a row.
         for (row in mRows-1 downTo 0) {
@@ -57,8 +62,24 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
             if(count == 4) return true
         }
 
-        // TODO: Add horizontal win condition.
-
+        // Row of 4. Firstly, find the row to iterate through.
+        var rowToIterate: Int = 0
+        for(row in 0 until mRows) { // Iterate top-down, finding the most-recent token.
+            if(mData[column][row] == player) {
+                break;
+            }
+            rowToIterate++
+        }
+        count = 0
+        for(col in mColumns-1 downTo 0) {
+            if(mData[col][rowToIterate] == player) {
+                count++
+            }
+            else {
+                count = 0
+            }
+            if(count == 4) return true
+        }
         return false
     }
 }

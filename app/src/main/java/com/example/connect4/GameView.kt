@@ -107,13 +107,13 @@ class GameView: View {
             // Calculate the column number from the X co-ordinate of the touch event.
             val colTouch = ev.x.toInt() / colWidth
 
-
             // Tell the game logic that the user has chosen a column.
             mStudentGame.playToken(colTouch, turn)
 
             if(mStudentGame.hasWon(colTouch, turn)) {
                 Toast.makeText(context, "Player $turn has won!", Toast.LENGTH_LONG).show();
             }
+
             // Refresh the screen display (this is instead of using Listeners).
             invalidate()
             return true
