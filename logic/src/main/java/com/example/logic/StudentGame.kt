@@ -15,13 +15,6 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
     // Not specified in the interface - just to show that other things can be added.
     var playerTurn: Int = 1
 
-    /*
-    init {
-        // Place a couple of random tokens to test the user interface.
-        mData[5][5] = 1
-        mData[6][3] = 2
-    } */
-
     // Returns the state of the game board at a specified column and row number.
     override fun getToken(column: Int, row: Int): Int {
         return mData[column][row]
@@ -29,6 +22,12 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
 
     // Changes the contents of the game board at a specified row and column.
     override fun playToken(column: Int, player: Int): Boolean {
+        /** :param column: The column of the most-recent token.
+         *  :param player: The player of the token.
+         *  :return: True if legal move, false otherwise.
+         *  Alternates the player turns, iterates through the rows of
+         *  the selected column, sets the first unassigned space to the player number.
+         */
         if (player <= 0) {
             throw IllegalArgumentException("Player numbers start with 1.")
         }
@@ -47,6 +46,7 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
     fun hasWon(column: Int, player: Int): Boolean {
         /** :param column: The column of the most-recent token.
          *  :param player: The player of the token.
+         *  :return: True if win condition met, false otherwise.
          *  Checks for a continuous vertical line of 4.
          *  Checks for a continuous horizontal line of 4.
          */
@@ -80,6 +80,10 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
             }
             if(count == 4) return true
         }
+
+        // TODO: Diagonal win condition.
+
         return false
     }
 }
+
