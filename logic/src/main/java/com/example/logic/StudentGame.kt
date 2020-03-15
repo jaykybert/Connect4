@@ -50,6 +50,15 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
          *  Checks for a continuous vertical line of 4.
          *  Checks for a continuous horizontal line of 4.
          */
+
+        var currentRow: Int = 0
+        for(row in 0 until mRows) { // Iterate top-down.
+            if (mData[column][row] == player) {
+                break
+            }
+                currentRow++
+        }
+
         // Column of 4.
         var count: Int = 0 // Store how many in a row.
         for (row in mRows-1 downTo 0) {
@@ -62,17 +71,10 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
             if(count == 4) return true
         }
 
-        // Row of 4. Firstly, find the row to iterate through.
-        var rowToIterate: Int = 0
-        for(row in 0 until mRows) { // Iterate top-down, finding the most-recent token.
-            if(mData[column][row] == player) {
-                break;
-            }
-            rowToIterate++
-        }
+        // Row of 4.
         count = 0
         for(col in mColumns-1 downTo 0) {
-            if(mData[col][rowToIterate] == player) {
+            if(mData[col][currentRow] == player) {
                 count++
             }
             else {
@@ -81,8 +83,62 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
             if(count == 4) return true
         }
 
-        // TODO: Diagonal win condition.
 
+        // Diagonal of 4.
+
+        // Top-left to bottom-right diagonal.
+        count = 1 // Start count with the token just played.
+        for(i in 1..3) {
+            try {
+                // Go diagonally towards top-left until enemy token.
+                if (mData[column - i][currentRow - i] == player)
+                    count++
+
+                if (count == 4) return true
+            }
+            catch(ex: ArrayIndexOutOfBoundsException) {
+                break
+            }
+        }
+        for(i in 1..3) {
+            try {
+                // Go diagonally towards bottom-right until enemy token.
+                if (mData[column + i][currentRow + i] == player)
+                    count++
+
+                if (count == 4) return true
+            }
+            catch(ex: ArrayIndexOutOfBoundsException) {
+                break
+            }
+        }
+
+        // Top-right to bottom-left diagonal.
+        count = 1
+        for(i in 1..3) {
+            try {
+                // Go diagonally towards top-right until enemy token.
+                if (mData[column + i][currentRow - 1] == player)
+                    count++
+
+                if (count == 4) return true
+            }
+            catch(ex: ArrayIndexOutOfBoundsException) {
+                break
+            }
+        }
+        for(i in 1..3) {
+            try {
+                // Go diagonally towards bottom-left until enemy token.
+                if (mData[column - i][currentRow + i] == player)
+                    count++
+
+                if (count == 4) return true
+            }
+            catch(ex: ArrayIndexOutOfBoundsException) {
+                break
+            }
+        }
         return false
     }
 }
