@@ -4,13 +4,28 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 import com.example.logic.StudentGame
+
+
+class StartGame: AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val columns = intent.getStringExtra(COLUMN_CHOICE)
+        val rows = intent.getStringExtra(ROW_CHOICE)
+
+        val gameView = GameView(this)
+        setContentView(gameView)
+    }
+}
+
 
 class GameView: View {
     constructor(context: Context?) : super(context)
@@ -40,6 +55,7 @@ class GameView: View {
     }
 
     private val myGestureDetector = GestureDetector(context, MyGestureListener())
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -111,7 +127,7 @@ class GameView: View {
             mStudentGame.playToken(colTouch, turn)
 
             if(mStudentGame.hasWon(colTouch, turn)) {
-                Toast.makeText(context, "Player $turn has won!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Player $turn has won!", Toast.LENGTH_LONG).show()
             }
 
             // Refresh the screen display (this is instead of using Listeners).
@@ -119,8 +135,4 @@ class GameView: View {
             return true
         }
     } // End of MyGestureListener class.
-
-    companion object { // Declare a constant (must be in the companion.
-        const val LOGTAG = "MyTask"
-    }
 }

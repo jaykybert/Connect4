@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Connect4</string>
+    <string name="button_play">Play</string>
+    <string name="input_column">Columns</string>
+    <string name="input_row">Rows</string>
 </resources>
