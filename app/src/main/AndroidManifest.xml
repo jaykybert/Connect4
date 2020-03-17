@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StartGame">
+        <activity android:name=".StartGame"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
