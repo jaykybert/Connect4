@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.logic.GameChangeInterface
 
 import com.example.logic.StudentGame
 
@@ -36,6 +37,15 @@ class GameView: View {
     private val colCount = mStudentGame.mColumns
     private val rowCount = mStudentGame.mRows
 
+    /* listenerImp represents the implementation of a function, as specified in
+     the GameChangeInterface interface, called onGameChange. */
+     var listenerImp = object: GameChangeInterface {
+        override fun onGameChange(studentGame: StudentGame) {
+            // Things that we want to do in this View when the game state changes.
+            invalidate()
+        }
+    }
+
     private var mGridPaint: Paint = Paint().apply {
         style = Paint.Style.FILL
         color = Color.BLUE
@@ -55,6 +65,10 @@ class GameView: View {
     }
 
     private val myGestureDetector = GestureDetector(context, MyGestureListener())
+
+    init {
+        mStudentGame.setGameChangeListener(listenerImp)
+    }
 
 
     override fun onDraw(canvas: Canvas) {
@@ -129,10 +143,7 @@ class GameView: View {
             if(mStudentGame.hasWon(colTouch, turn)) {
                 Toast.makeText(context, "Player $turn has won!", Toast.LENGTH_LONG).show()
             }
-
-            // Refresh the screen display (this is instead of using Listeners).
-            invalidate()
             return true
         }
-    } // End of MyGestureListener class.
+    }
 }

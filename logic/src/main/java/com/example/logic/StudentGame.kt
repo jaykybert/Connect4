@@ -15,6 +15,23 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
     // Not specified in the interface - just to show that other things can be added.
     var playerTurn: Int = 1
 
+    /* Variable which will hold a reference to the function onGameChange
+     which is declared in the GameView class. */
+    var onGameChangeListener: GameChangeInterface? = null
+
+    /* Function, which will, when called, store a reference back to the View
+     * (the thing listening for a change) in the variable onGameChangeListener.
+     * This enables the game class to alert the view class when the game state changes.
+     */
+    fun setGameChangeListener(listenerImp: GameChangeInterface) {
+        onGameChangeListener = listenerImp
+    }
+
+    // Call fireGameChange from anywhere in this class which can change the game state
+    private fun fireGameChange() {
+        onGameChangeListener?.onGameChange(this)
+    }
+
     // Returns the state of the game board at a specified column and row number.
     override fun getToken(column: Int, row: Int): Int {
         return mData[column][row]
@@ -37,9 +54,11 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
         for (row in mRows-1 downTo 0) {
             if (mData[column][row] == 0) {
                 mData[column][row] = player
+                fireGameChange()
                 return true
             }
         }
+        fireGameChange()
         return false // Illegal move.
     }
 
