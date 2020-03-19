@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.logic.GameChangeInterface
 
 import com.example.logic.StudentGame
+import kotlin.reflect.typeOf
 
 
 class StartGame: AppCompatActivity() {
@@ -22,30 +23,52 @@ class StartGame: AppCompatActivity() {
         val columns = intent.getStringExtra(COLUMN_CHOICE)
         val rows = intent.getStringExtra(ROW_CHOICE)
 
-        val gameView = GameView(this)
-        setContentView(gameView)
+        if(columns != null && rows != null)
+            try {
+                val c = columns.toInt()
+                val r = rows.toInt()
+
+                val gameView = GameView(c, r, this)
+                setContentView(gameView)
+                println(c.javaClass.name)
+                println(r.javaClass.name)
+            }
+            catch(exc: Exception) {
+                println("exception caught")
+                val gameView = GameView(7, 7, this)
+                setContentView(gameView)
+            }
+        else {
+            val gameView = GameView(7, 7, this)
+            setContentView(gameView)
+        }
     }
 }
 
 
-class GameView: View {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?): super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class GameView(cols: Int, rows: Int, context: Context?): View(context) {
 
-    private var mStudentGame: StudentGame = StudentGame(8, 12)
-    private val colCount = mStudentGame.mColumns
-    private val rowCount = mStudentGame.mRows
+    private val numOfCols: Int = cols
+    private val numOfRows: Int = rows
+    private var mStudentGame: StudentGame
 
     /* listenerImp represents the implementation of a function, as specified in
-     the GameChangeInterface interface, called onGameChange. */
-     var listenerImp = object: GameChangeInterface {
+ the GameChangeInterface interface, called onGameChange. */
+    private var listenerImp = object: GameChangeInterface {
         override fun onGameChange(studentGame: StudentGame) {
             // Things that we want to do in this View when the game state changes.
             invalidate()
         }
     }
 
+    init {
+        mStudentGame = StudentGame(numOfCols, numOfRows)
+        mStudentGame.setGameChangeListener(listenerImp)
+    }
+
+    private val colCount = mStudentGame.mColumns
+    private val rowCount = mStudentGame.mRows
+    
     private var mGridPaint: Paint = Paint().apply {
         style = Paint.Style.FILL
         color = Color.BLUE
@@ -65,10 +88,6 @@ class GameView: View {
     }
 
     private val myGestureDetector = GestureDetector(context, MyGestureListener())
-
-    init {
-        mStudentGame.setGameChangeListener(listenerImp)
-    }
 
 
     override fun onDraw(canvas: Canvas) {

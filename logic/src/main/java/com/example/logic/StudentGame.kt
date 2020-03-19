@@ -17,7 +17,7 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
 
     /* Variable which will hold a reference to the function onGameChange
      which is declared in the GameView class. */
-    var onGameChangeListener: GameChangeInterface? = null
+    private var onGameChangeListener: GameChangeInterface? = null
 
     /* Function, which will, when called, store a reference back to the View
      * (the thing listening for a change) in the variable onGameChangeListener.
@@ -70,7 +70,7 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
          *  Checks for a continuous horizontal line of 4.
          */
 
-        var currentRow: Int = 0
+        var currentRow = 0
         for(row in 0 until mRows) { // Iterate top-down.
             if (mData[column][row] == player) {
                 break
@@ -79,7 +79,7 @@ class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
         }
 
         // Column of 4.
-        var count: Int = 0 // Store how many in a row.
+        var count = 0 // Store how many in a row.
         for (row in mRows-1 downTo 0) {
             if(mData[column][row] == player) {
                 count++
