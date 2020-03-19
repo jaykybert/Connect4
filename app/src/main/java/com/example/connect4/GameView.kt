@@ -68,7 +68,7 @@ class GameView(cols: Int, rows: Int, context: Context?): View(context) {
 
     private val colCount = mStudentGame.mColumns
     private val rowCount = mStudentGame.mRows
-    
+
     private var mGridPaint: Paint = Paint().apply {
         style = Paint.Style.FILL
         color = Color.BLUE
