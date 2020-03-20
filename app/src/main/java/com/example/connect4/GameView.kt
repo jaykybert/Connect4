@@ -4,46 +4,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.os.Bundle
-import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.logic.GameChangeInterface
-
 import com.example.logic.StudentGame
-import kotlin.reflect.typeOf
-
-
-class StartGame: AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val columns = intent.getStringExtra(COLUMN_CHOICE)
-        val rows = intent.getStringExtra(ROW_CHOICE)
-
-        if(columns != null && rows != null)
-            try {
-                val c = columns.toInt()
-                val r = rows.toInt()
-
-                val gameView = GameView(c, r, this)
-                setContentView(gameView)
-                println(c.javaClass.name)
-                println(r.javaClass.name)
-            }
-            catch(exc: Exception) {
-                println("exception caught")
-                val gameView = GameView(7, 7, this)
-                setContentView(gameView)
-            }
-        else {
-            val gameView = GameView(7, 7, this)
-            setContentView(gameView)
-        }
-    }
-}
 
 
 class GameView(cols: Int, rows: Int, context: Context?): View(context) {

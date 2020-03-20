@@ -3,7 +3,7 @@ package com.example.logic
 import com.example.lib.GameInterface
 import kotlin.IllegalArgumentException
 
-class StudentGame (columns: Int = 10, rows: Int = 10): GameInterface {
+class StudentGame (columns: Int, rows: Int): GameInterface {
 
     override val mColumns: Int = columns
     override val mRows: Int = rows
