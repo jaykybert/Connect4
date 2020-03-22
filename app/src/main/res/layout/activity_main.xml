@@ -8,11 +8,13 @@
 
     <EditText
         android:id="@+id/input_column"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="82dp"
         android:layout_height="47dp"
         android:layout_marginStart="80dp"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="18dp"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:hint="@string/input_column"
         android:inputType="number"
@@ -21,10 +23,13 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="125dp"
+        android:layout_height="80dp"
         android:onClick="playGame"
         android:text="@string/button_play"
+        android:textStyle="bold"
+        android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +42,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="80dp"
         android:layout_marginRight="80dp"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:hint="@string/input_row"
         android:inputType="number"
